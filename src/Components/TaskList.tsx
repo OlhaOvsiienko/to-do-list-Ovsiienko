@@ -24,9 +24,16 @@ export default class TaskList extends Component<TaskListProps, TaskListState> {
     const initialState = storedTasks ? JSON.parse(storedTasks) : [];
 
     this.state = {
-      list: props.tasks ? props.tasks : initialState, // Используем props.tasks, если он есть, иначе initialState
+      list: initialState, 
       text: ""
     };
+  }
+
+  componentDidMount() {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      this.setState({ list: JSON.parse(storedTasks) });
+    }
   }
 
   handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
