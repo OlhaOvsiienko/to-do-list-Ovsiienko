@@ -8,8 +8,8 @@ type AppProps = {};
 const App: React.FC<AppProps> = () => {
   return (
     <div>
-      <TaskList />
-      <TaskItem />
+      <TaskList tasks={[]}/>
+      <TaskItem task={{ id: 1, text: "", completed: false }} onRemove={() => {}} onToggle={() => {}}/>
     </div>
   );
 };

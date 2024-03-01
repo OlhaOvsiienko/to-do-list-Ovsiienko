@@ -1,52 +1,55 @@
-import React, { Component } from 'react';
+import React, { Component, ChangeEvent } from 'react';
 import TaskItem from './TaskItem';
 
 interface Task {
-    id: number;
-    task: string;
-    completed: boolean;
-  }
-  
-  interface TaskListProps {
-    tasks: Task[];
-  }
+  id: number;
+  text: string;
+  completed: boolean;
+}
 
-  export default class TaskList extends Component<TaskListProps> {
-  constructor(props: {}) {
+interface TaskListProps {
+  tasks: Task[]; 
+}
+
+interface TaskListState {
+  list: Task[];
+  text: string;
+}
+
+export default class TaskList extends Component<TaskListProps, TaskListState> {
+  constructor(props: TaskListProps) {
     super(props);
 
     const storedTasks = localStorage.getItem('tasks');
-    const initialState: string | null = storedTasks ? JSON.parse(storedTasks) : null;
-
-    
+    const initialState = storedTasks ? JSON.parse(storedTasks) : [];
 
     this.state = {
-        list: initialState,
-        newTask: ""
-      };
+      list: props.tasks.length > 0 ? props.tasks : initialState,
+      text: ""
+    };
   }
 
-  handleInputChange = (event: { target: { value: string; }; }) => {
-    this.setState({ newTask: event.target.value });
+  handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    this.setState({ text: event.target.value });
   }
 
   handleAddClick = () => {
-    const newTask: { id: number; task: string; completed: boolean } = {
-        id: Date.now(), 
-        task: this.state.newTask,
-        completed: false
-      };
+    const task: Task = {
+      id: Date.now(),
+      text: this.state.text,
+      completed: false
+    };
 
     this.setState(prevState => ({
-      list: [...prevState.list, newTask],
-      newTask: "" 
+      list: [...prevState.list, task],
+      text: ""
     }), () => {
       localStorage.setItem('tasks', JSON.stringify(this.state.list));
     });
-  } 
+  }
 
   handleRemove = (id: number) => {
-    const updatedList = this.state.list.filter((task: { id: number; }) => task.id !== id);
+    const updatedList = this.state.list.filter(task => task.id !== id);
 
     this.setState({ list: updatedList }, () => {
       localStorage.setItem('tasks', JSON.stringify(this.state.list));
@@ -54,21 +57,20 @@ interface Task {
   }
 
   handleToggle = (id: number) => {
-    const updatedList = this.state.list.map((task: { id: number; task: string; completed: boolean }) => {
+    const updatedList = this.state.list.map(task => {
       if (task.id === id) {
         return { ...task, completed: !task.completed };
       }
       return task;
     });
-  
+
     this.setState({ list: updatedList }, () => {
       localStorage.setItem('tasks', JSON.stringify(this.state.list));
     });
   }
-  
 
   render() {
-    const { list, newTask } = this.state;
+    const { list, text } = this.state;
 
     return (
       <div>
@@ -76,11 +78,11 @@ interface Task {
 
         <div>
           <label>
-            <input 
-              type="text" 
-              placeholder="Enter task" 
-              value={newTask} 
-              onChange={this.handleInputChange} 
+            <input
+              type="text"
+              placeholder="Enter task"
+              value={text}
+              onChange={this.handleInputChange}
             />
             <button onClick={this.handleAddClick}>Add</button>
           </label>
@@ -102,4 +104,5 @@ interface Task {
     );
   }
 }
+
 
