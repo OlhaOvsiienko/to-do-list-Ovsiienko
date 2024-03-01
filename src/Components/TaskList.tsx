@@ -8,7 +8,7 @@ interface Task {
 }
 
 interface TaskListProps {
-  tasks: Task[]; 
+  tasks?: Task[]; // Свойство tasks теперь необязательное
 }
 
 interface TaskListState {
@@ -24,7 +24,7 @@ export default class TaskList extends Component<TaskListProps, TaskListState> {
     const initialState = storedTasks ? JSON.parse(storedTasks) : [];
 
     this.state = {
-      list: props.tasks.length > 0 ? props.tasks : initialState,
+      list: props.tasks ? props.tasks : initialState, // Используем props.tasks, если он есть, иначе initialState
       text: ""
     };
   }
@@ -104,5 +104,3 @@ export default class TaskList extends Component<TaskListProps, TaskListState> {
     );
   }
 }
-
-
