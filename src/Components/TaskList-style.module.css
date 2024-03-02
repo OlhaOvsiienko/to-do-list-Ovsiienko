@@ -1,0 +1,22 @@
+.field {
+    border: 2px solid #808080;
+    background-color: #edebeb;
+    padding: 10px;
+    text-align: left;
+    display: inline-block;
+}
+
+.title {
+    color: black;
+    font-weight: bold;
+}
+
+.buttonAdd {
+    background-color: rgb(25, 152, 25);
+    color: white;
+    border-radius: 3px;
+}
+
+.buttonAdd:active {
+    filter: brightness(80%);
+}

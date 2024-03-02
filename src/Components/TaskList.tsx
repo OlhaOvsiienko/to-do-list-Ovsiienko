@@ -1,5 +1,6 @@
 import React, { Component, ChangeEvent } from "react";
 import TaskItem from "./TaskItem";
+import styles from './TaskList-style.module.css'
 
 interface Task {
   id: number;
@@ -78,8 +79,8 @@ export default class TaskList extends Component<TaskListProps, TaskListState> {
     const { list, text } = this.state;
 
     return (
-      <div>
-        <div>Task List</div>
+      <div className={styles.field}>
+        <div className={styles.title}>Task List</div>
 
         <div>
           <label>
@@ -89,7 +90,7 @@ export default class TaskList extends Component<TaskListProps, TaskListState> {
               value={text}
               onChange={this.handleInputChange}
             />
-            <button onClick={this.handleAddClick}>Add</button>
+            <button onClick={this.handleAddClick} className={styles.buttonAdd}>Add</button>
           </label>
         </div>
 
