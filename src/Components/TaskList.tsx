@@ -1,5 +1,5 @@
-import React, { Component, ChangeEvent } from 'react';
-import TaskItem from './TaskItem';
+import React, { Component, ChangeEvent } from "react";
+import TaskItem from "./TaskItem";
 
 interface Task {
   id: number;
@@ -20,51 +20,49 @@ export default class TaskList extends Component<TaskListProps, TaskListState> {
   constructor(props: TaskListProps) {
     super(props);
 
-    const storedTasks = localStorage.getItem('tasks');
-    const initialState = storedTasks ? JSON.parse(storedTasks) : [];
+    const storedTasks = localStorage.getItem("tasks");
+    const initialList =
+      props.tasks ?? (storedTasks && JSON.parse(storedTasks)) ?? [];
 
     this.state = {
-      list: initialState, 
-      text: ""
+      list: initialList,
+      text: "",
     };
-  }
-
-  componentDidMount() {
-    const storedTasks = localStorage.getItem('tasks');
-    if (storedTasks) {
-      this.setState({ list: JSON.parse(storedTasks) });
-    }
+    localStorage.setItem("tasks", JSON.stringify(this.state.list));
   }
 
   handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({ text: event.target.value });
-  }
+  };
 
   handleAddClick = () => {
     const task: Task = {
       id: Date.now(),
       text: this.state.text,
-      completed: false
+      completed: false,
     };
 
-    this.setState(prevState => ({
-      list: [...prevState.list, task],
-      text: ""
-    }), () => {
-      localStorage.setItem('tasks', JSON.stringify(this.state.list));
-    });
-  }
+    this.setState(
+      (prevState) => ({
+        list: [...prevState.list, task],
+        text: "",
+      }),
+      () => {
+        localStorage.setItem("tasks", JSON.stringify(this.state.list));
+      }
+    );
+  };
 
   handleRemove = (id: number) => {
-    const updatedList = this.state.list.filter(task => task.id !== id);
+    const updatedList = this.state.list.filter((task) => task.id !== id);
 
     this.setState({ list: updatedList }, () => {
-      localStorage.setItem('tasks', JSON.stringify(this.state.list));
+      localStorage.setItem("tasks", JSON.stringify(this.state.list));
     });
-  }
+  };
 
   handleToggle = (id: number) => {
-    const updatedList = this.state.list.map(task => {
+    const updatedList = this.state.list.map((task) => {
       if (task.id === id) {
         return { ...task, completed: !task.completed };
       }
@@ -72,9 +70,9 @@ export default class TaskList extends Component<TaskListProps, TaskListState> {
     });
 
     this.setState({ list: updatedList }, () => {
-      localStorage.setItem('tasks', JSON.stringify(this.state.list));
+      localStorage.setItem("tasks", JSON.stringify(this.state.list));
     });
-  }
+  };
 
   render() {
     const { list, text } = this.state;
@@ -98,7 +96,7 @@ export default class TaskList extends Component<TaskListProps, TaskListState> {
         {list.length === 0 ? (
           <div>No tasks to display</div>
         ) : (
-          list.map(task => (
+          list.map((task) => (
             <TaskItem
               key={task.id}
               task={task}

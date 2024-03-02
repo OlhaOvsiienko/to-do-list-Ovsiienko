@@ -25,13 +25,9 @@ const TaskItem: React.FC<Props> = ({ task, onRemove, onToggle }) => {
   };
 
   return (
-    <div key={id} style={{ textDecoration: completed ? 'line-through' : 'none' }}>
-      <label>
-        <input 
-          type="checkbox" 
-          checked={completed}
-          onChange={handleToggle} 
-        />
+    <div key={id}>
+      <label style={{ textDecoration: completed ? "line-through" : "none" }}>
+        <input type="checkbox" checked={completed} onChange={handleToggle} />
         {text}
       </label>
       <button onClick={handleRemove}>Remove</button>
