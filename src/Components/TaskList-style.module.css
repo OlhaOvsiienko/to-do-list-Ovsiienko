@@ -3,13 +3,16 @@
     background-color: #edebeb;
     padding: 10px;
     text-align: left;
-    display: inline-block;
+    display: flex;   
+    flex-direction: column;   
 }
 
 .title {
     color: black;
     font-weight: bold;
+    font-size: 18px;
 }
+
 
 .buttonAdd {
     background-color: rgb(25, 152, 25);

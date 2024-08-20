@@ -1,29 +1,29 @@
-import React from 'react';
+import React from 'react'
 import styles from './TaskItem-style.module.css'
 
 interface Task {
-  id: number;
-  text: string;
-  completed: boolean;
+  id: number
+  text: string
+  completed: boolean
 }
 
 interface Props {
-  task: Task | null;
-  onRemove: (id: number) => void;
-  onToggle: (id: number) => void;
+  task: Task | null
+  onRemove: (id: number) => void
+  onToggle: (id: number) => void
 }
 
 const TaskItem: React.FC<Props> = ({ task, onRemove, onToggle }) => {
-  if (!task) return null; 
-  const { id, text, completed } = task;
+  if (!task) return null
+  const { id, text, completed } = task
   
   const handleRemove = () => {
-    onRemove(id);
-  };
+    onRemove(id)
+  }
 
   const handleToggle = () => {
-    onToggle(id);
-  };
+    onToggle(id)
+  }
 
   return (
     <div key={id} className={styles.taskField}>
@@ -37,9 +37,9 @@ const TaskItem: React.FC<Props> = ({ task, onRemove, onToggle }) => {
       <button onClick={handleRemove} className={styles.buttonRemove}>Remove</button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TaskItem;
+export default TaskItem
 
 

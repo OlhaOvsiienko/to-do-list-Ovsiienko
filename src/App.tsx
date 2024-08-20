@@ -7,9 +7,8 @@ type AppProps = {};
 
 const App: React.FC<AppProps> = () => {
   return (
-    <div>
+    <div className='root'>
       <TaskList tasks={[]}/>
-      
     </div>
   );
 };
